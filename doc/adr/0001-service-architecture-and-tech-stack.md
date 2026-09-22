@@ -21,9 +21,9 @@ The service is built as two parts:
 - **Backend**: Spring Boot 3.x on Java 21, built with Gradle (Kotlin DSL). Persistence uses
   Spring Data JPA with Hibernate, backed by a local SQLite file via the `sqlite-jdbc` driver and
   the `hibernate-community-dialects` SQLite dialect. The backend exposes a REST API for reading
-  and creating entries.
+  and creating assignments.
 - **Frontend**: A React single-page app, written in TypeScript and scaffolded with Vite. It
-  visualises stored entries and provides a form for adding new ones, consuming the backend's REST
+  visualises stored assignments and provides a form for adding new ones, consuming the backend's REST
   API.
 
 Java and Node toolchain versions are managed with `mise`, pinned per-project via a `mise.toml` in

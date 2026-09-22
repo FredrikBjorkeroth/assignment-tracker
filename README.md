@@ -25,7 +25,33 @@ cd backend
 ```
 
 Starts the API on `http://localhost:8080`, backed by `backend/data/career.db` (created on
-first run).
+first run). This file persists across restarts — stopping and restarting `bootRun` will not
+lose your data. It's separate from the database used by tests (`backend/build/career-test.db`,
+created by `./gradlew integrationTest`), which is dropped after each test run and cleared
+entirely by `./gradlew clean`.
+
+### Adding an assignment
+
+With the backend running, create an assignment via `POST`:
+
+```bash
+curl -X POST http://localhost:8080/api/assignments \
+  -H "Content-Type: application/json" \
+  -d '{
+    "link": "https://example.com/job-posting",
+    "technologies": ["Java", "React"],
+    "skillMatch": 4,
+    "interest": 5
+  }'
+```
+
+`technologies` is a list of strings; `skillMatch` and `interest` are optional integers from 1-5.
+
+List all saved assignments:
+
+```bash
+curl http://localhost:8080/api/assignments
+```
 
 ## Running the frontend
 

@@ -11,6 +11,7 @@ frontend/.vite/
 # IDE
 .idea/
 .vscode/
+.mcp.json
 
 # Local database
 *.db
