@@ -1,0 +1,21 @@
+# Java / Gradle
+.gradle/
+backend/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Node / Vite
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# IDE
+.idea/
+.vscode/
+
+# Local database
+*.db
+*.sqlite
+*.sqlite3
+
+# OS
+.DS_Store
