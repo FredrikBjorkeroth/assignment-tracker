@@ -62,3 +62,21 @@ npm run dev
 ```
 
 Starts the dev server on `http://localhost:5173`.
+
+## Running E2E tests
+
+`e2e/` is a self-contained package (own `package.json`, independent of both `backend/` and
+`frontend/`) that drives the real frontend and backend together with Playwright.
+
+One-time setup: `cd e2e && npm install && npx playwright install --with-deps chromium`.
+
+```bash
+cd e2e
+npm run test:e2e
+```
+
+This starts its own backend (`e2e` Spring profile, backed by the throwaway
+`backend/build/career-e2e.db` — see
+`doc/adr/0002-e2e-testing-strategy.md`) and its own frontend dev server, runs the tests, then
+stops both. It never touches `backend/data/career.db`. Since it reuses port `8080`, stop any
+backend you started manually via `./gradlew bootRun` before running this.
