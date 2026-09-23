@@ -76,6 +76,34 @@
   color: var(--accent);
 }
 
+.assignment-table .cell-input,
+.assignment-table .cell-select {
+  font: inherit;
+  width: 100%;
+  padding: 4px 6px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--text-h);
+  background: transparent;
+
+  &:hover:not(:disabled) {
+    border-color: var(--border);
+  }
+  &:focus-visible {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--bg);
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.assignment-table .cell-select {
+  width: auto;
+}
+
 .pagination {
   display: flex;
   align-items: center;

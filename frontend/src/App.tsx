@@ -29,6 +29,12 @@ function App() {
     setAssignments((prev) => sortByIdDesc([created, ...prev]))
   }
 
+  function handleUpdated(updated: Assignment) {
+    setAssignments((prev) =>
+      prev.map((a) => (a.id === updated.id ? updated : a)),
+    )
+  }
+
   return (
     <div className="app">
       <h1>Assignments</h1>
@@ -36,7 +42,7 @@ function App() {
       {loading && <p>Loading...</p>}
       {loadError && <p className="form-error">{loadError}</p>}
       {!loading && !loadError && (
-        <AssignmentTable assignments={assignments} />
+        <AssignmentTable assignments={assignments} onUpdated={handleUpdated} />
       )}
     </div>
   )

@@ -6,9 +6,14 @@ export interface Assignment {
   interest: number | null
 }
 
-export interface CreateAssignmentInput {
+export interface AssignmentInput {
   link: string
+  technologies?: string[]
+  skillMatch?: number | null
+  interest?: number | null
 }
+
+export type CreateAssignmentInput = AssignmentInput
 
 const BASE_URL = '/api/assignments'
 
@@ -30,6 +35,21 @@ export async function createAssignment(
   })
   if (!res.ok) {
     throw new Error(`Failed to add assignment (${res.status})`)
+  }
+  return res.json()
+}
+
+export async function updateAssignment(
+  id: number,
+  input: AssignmentInput,
+): Promise<Assignment> {
+  const res = await fetch(`${BASE_URL}/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(input),
+  })
+  if (!res.ok) {
+    throw new Error(`Failed to update assignment (${res.status})`)
   }
   return res.json()
 }
