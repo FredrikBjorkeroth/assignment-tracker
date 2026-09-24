@@ -34,7 +34,7 @@ public class Assignment {
 	private Integer interest;
 
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "varchar(255) not null default 'CONSIDERING'")
 	private AssignmentStatus status = AssignmentStatus.CONSIDERING;
 
 	@Lob
