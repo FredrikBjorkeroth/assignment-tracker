@@ -35,6 +35,10 @@ function App() {
     )
   }
 
+  function handleDeleted(id: number) {
+    setAssignments((prev) => prev.filter((a) => a.id !== id))
+  }
+
   return (
     <div className="app">
       <h1>Assignments</h1>
@@ -42,7 +46,11 @@ function App() {
       {loading && <p>Loading...</p>}
       {loadError && <p className="form-error">{loadError}</p>}
       {!loading && !loadError && (
-        <AssignmentTable assignments={assignments} onUpdated={handleUpdated} />
+        <AssignmentTable
+          assignments={assignments}
+          onUpdated={handleUpdated}
+          onDeleted={handleDeleted}
+        />
       )}
     </div>
   )

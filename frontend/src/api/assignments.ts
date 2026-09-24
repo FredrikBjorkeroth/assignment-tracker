@@ -39,6 +39,13 @@ export async function createAssignment(
   return res.json()
 }
 
+export async function deleteAssignment(id: number): Promise<void> {
+  const res = await fetch(`${BASE_URL}/${id}`, { method: 'DELETE' })
+  if (!res.ok) {
+    throw new Error(`Failed to delete assignment (${res.status})`)
+  }
+}
+
 export async function updateAssignment(
   id: number,
   input: AssignmentInput,

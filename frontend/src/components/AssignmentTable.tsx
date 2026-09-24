@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { Assignment } from '../api/assignments'
-import { updateAssignment } from '../api/assignments'
+import { deleteAssignment, updateAssignment } from '../api/assignments'
 
 const PAGE_SIZE = 20
 const RATINGS = [1, 2, 3, 4, 5]
@@ -8,11 +8,13 @@ const RATINGS = [1, 2, 3, 4, 5]
 interface AssignmentTableProps {
   assignments: Assignment[]
   onUpdated: (assignment: Assignment) => void
+  onDeleted: (id: number) => void
 }
 
 export function AssignmentTable({
   assignments,
   onUpdated,
+  onDeleted,
 }: AssignmentTableProps) {
   const [page, setPage] = useState(0)
 
@@ -32,12 +34,13 @@ export function AssignmentTable({
             <th>Technologies</th>
             <th>Skill Match</th>
             <th>Interest</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           {pageItems.length === 0 && (
             <tr>
-              <td colSpan={4}>No assignments yet.</td>
+              <td colSpan={5}>No assignments yet.</td>
             </tr>
           )}
           {pageItems.map((assignment) => (
@@ -45,6 +48,7 @@ export function AssignmentTable({
               key={assignment.id}
               assignment={assignment}
               onUpdated={onUpdated}
+              onDeleted={onDeleted}
             />
           ))}
         </tbody>
@@ -75,14 +79,18 @@ export function AssignmentTable({
 interface AssignmentRowProps {
   assignment: Assignment
   onUpdated: (assignment: Assignment) => void
+  onDeleted: (id: number) => void
 }
 
-function AssignmentRow({ assignment, onUpdated }: AssignmentRowProps) {
+function AssignmentRow({ assignment, onUpdated, onDeleted }: AssignmentRowProps) {
   const [technologiesText, setTechnologiesText] = useState(
     assignment.technologies.join(', '),
   )
   const [saving, setSaving] = useState(false)
+  const [deleting, setDeleting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  const busy = saving || deleting
 
   async function save(changes: {
     technologies?: string[]
@@ -126,6 +134,25 @@ function AssignmentRow({ assignment, onUpdated }: AssignmentRowProps) {
     }
   }
 
+  async function handleDelete() {
+    const confirmed = window.confirm(
+      `Delete this assignment?\n${assignment.link}`,
+    )
+    if (!confirmed) return
+
+    setDeleting(true)
+    setError(null)
+    try {
+      await deleteAssignment(assignment.id)
+      onDeleted(assignment.id)
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : 'Failed to delete assignment.',
+      )
+      setDeleting(false)
+    }
+  }
+
   return (
     <>
       <tr>
@@ -139,7 +166,7 @@ function AssignmentRow({ assignment, onUpdated }: AssignmentRowProps) {
             type="text"
             className="cell-input"
             value={technologiesText}
-            disabled={saving}
+            disabled={busy}
             onChange={(e) => setTechnologiesText(e.target.value)}
             onBlur={handleTechnologiesBlur}
           />
@@ -147,21 +174,31 @@ function AssignmentRow({ assignment, onUpdated }: AssignmentRowProps) {
         <td>
           <RatingSelect
             value={assignment.skillMatch}
-            disabled={saving}
+            disabled={busy}
             onChange={(skillMatch) => save({ skillMatch })}
           />
         </td>
         <td>
           <RatingSelect
             value={assignment.interest}
-            disabled={saving}
+            disabled={busy}
             onChange={(interest) => save({ interest })}
           />
+        </td>
+        <td>
+          <button
+            type="button"
+            className="delete-button"
+            disabled={busy}
+            onClick={handleDelete}
+          >
+            {deleting ? 'Deleting...' : 'Delete'}
+          </button>
         </td>
       </tr>
       {error && (
         <tr>
-          <td colSpan={4} className="form-error">
+          <td colSpan={5} className="form-error">
             {error}
           </td>
         </tr>

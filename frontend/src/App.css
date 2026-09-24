@@ -104,6 +104,24 @@
   width: auto;
 }
 
+.assignment-table .delete-button {
+  font: inherit;
+  padding: 4px 10px;
+  border-radius: 5px;
+  color: #e5484d;
+  background: transparent;
+  border: 1px solid var(--border);
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    border-color: #e5484d;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
 .pagination {
   display: flex;
   align-items: center;
