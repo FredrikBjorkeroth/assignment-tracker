@@ -16,6 +16,7 @@ export interface Assignment {
   skillMatch: number | null
   interest: number | null
   status: AssignmentStatus
+  notes: string | null
 }
 
 export interface AssignmentInput {
@@ -24,6 +25,7 @@ export interface AssignmentInput {
   skillMatch?: number | null
   interest?: number | null
   status?: AssignmentStatus
+  notes?: string | null
 }
 
 export type CreateAssignmentInput = AssignmentInput

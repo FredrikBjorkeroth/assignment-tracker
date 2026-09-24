@@ -10,5 +10,6 @@ public record CreateAssignmentRequest(
 		List<String> technologies,
 		@Min(1) @Max(5) Integer skillMatch,
 		@Min(1) @Max(5) Integer interest,
-		AssignmentStatus status) {
+		AssignmentStatus status,
+		String notes) {
 }

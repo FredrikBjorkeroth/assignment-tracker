@@ -8,7 +8,8 @@ public record AssignmentResponse(
 		List<String> technologies,
 		Integer skillMatch,
 		Integer interest,
-		AssignmentStatus status) {
+		AssignmentStatus status,
+		String notes) {
 
 	static AssignmentResponse from(Assignment assignment) {
 		return new AssignmentResponse(
@@ -17,6 +18,7 @@ public record AssignmentResponse(
 				assignment.getTechnologies(),
 				assignment.getSkillMatch(),
 				assignment.getInterest(),
-				assignment.getStatus());
+				assignment.getStatus(),
+				assignment.getNotes());
 	}
 }

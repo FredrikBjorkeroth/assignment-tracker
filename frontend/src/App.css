@@ -104,6 +104,25 @@
   width: auto;
 }
 
+.assignment-table .notes-button {
+  font: inherit;
+  padding: 4px 10px;
+  border-radius: 5px;
+  color: var(--text-h);
+  background: transparent;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover:not(:disabled) {
+    border-color: var(--accent);
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
 .assignment-table .delete-button {
   display: inline-flex;
   align-items: center;
@@ -121,6 +140,82 @@
   &:disabled {
     cursor: not-allowed;
     opacity: 0.6;
+  }
+}
+
+.notes-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.notes-modal {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border-radius: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+.notes-modal-textarea {
+  font: inherit;
+  width: 100%;
+  height: 200px;
+  resize: none;
+  padding: 10px 12px;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  color: var(--text-h);
+  background: transparent;
+  box-sizing: border-box;
+
+  &:focus-visible {
+    outline: none;
+    border-color: var(--accent);
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.notes-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.notes-modal-actions button {
+  font: inherit;
+  padding: 6px 14px;
+  border-radius: 5px;
+  color: var(--text-h);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.notes-modal-actions .notes-modal-save {
+  color: var(--accent);
+  background: var(--accent-bg);
+
+  &:hover:not(:disabled) {
+    border-color: var(--accent-border);
   }
 }
 

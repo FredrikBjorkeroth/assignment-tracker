@@ -32,7 +32,8 @@ public class AssignmentController {
 				request.technologies(),
 				request.skillMatch(),
 				request.interest(),
-				request.status());
+				request.status(),
+				request.notes());
 		return AssignmentResponse.from(assignmentRepository.save(assignment));
 	}
 
@@ -51,6 +52,7 @@ public class AssignmentController {
 		assignment.setSkillMatch(request.skillMatch());
 		assignment.setInterest(request.interest());
 		assignment.setStatus(request.status() != null ? request.status() : assignment.getStatus());
+		assignment.setNotes(request.notes());
 		return AssignmentResponse.from(assignmentRepository.save(assignment));
 	}
 

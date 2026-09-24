@@ -5,6 +5,7 @@ import {
   deleteAssignment,
   updateAssignment,
 } from '../api/assignments'
+import { NotesModal } from './NotesModal'
 
 const PAGE_SIZE = 20
 const RATINGS = [1, 2, 3, 4, 5]
@@ -48,13 +49,14 @@ export function AssignmentTable({
             <th>Skill Match</th>
             <th>Interest</th>
             <th>Status</th>
+            <th>Notes</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           {pageItems.length === 0 && (
             <tr>
-              <td colSpan={6}>No assignments yet.</td>
+              <td colSpan={7}>No assignments yet.</td>
             </tr>
           )}
           {pageItems.map((assignment) => (
@@ -103,6 +105,7 @@ function AssignmentRow({ assignment, onUpdated, onDeleted }: AssignmentRowProps)
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [notesOpen, setNotesOpen] = useState(false)
 
   const busy = saving || deleting
 
@@ -111,6 +114,7 @@ function AssignmentRow({ assignment, onUpdated, onDeleted }: AssignmentRowProps)
     skillMatch?: number | null
     interest?: number | null
     status?: AssignmentStatus
+    notes?: string | null
   }) {
     setSaving(true)
     setError(null)
@@ -127,12 +131,15 @@ function AssignmentRow({ assignment, onUpdated, onDeleted }: AssignmentRowProps)
             ? changes.interest
             : assignment.interest,
         status: changes.status ?? assignment.status,
+        notes: changes.notes !== undefined ? changes.notes : assignment.notes,
       })
       onUpdated(updated)
+      return true
     } catch (err) {
       setError(
         err instanceof Error ? err.message : 'Failed to update assignment.',
       )
+      return false
     } finally {
       setSaving(false)
     }
@@ -167,6 +174,11 @@ function AssignmentRow({ assignment, onUpdated, onDeleted }: AssignmentRowProps)
       )
       setDeleting(false)
     }
+  }
+
+  async function handleSaveNotes(notes: string) {
+    const ok = await save({ notes: notes.trim() === '' ? null : notes })
+    if (ok) setNotesOpen(false)
   }
 
   return (
@@ -218,6 +230,16 @@ function AssignmentRow({ assignment, onUpdated, onDeleted }: AssignmentRowProps)
         <td>
           <button
             type="button"
+            className="notes-button"
+            disabled={busy}
+            onClick={() => setNotesOpen(true)}
+          >
+            {assignment.notes ? 'Edit notes' : 'Add notes'}
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
             className="delete-button"
             disabled={busy}
             onClick={handleDelete}
@@ -230,10 +252,18 @@ function AssignmentRow({ assignment, onUpdated, onDeleted }: AssignmentRowProps)
       </tr>
       {error && (
         <tr>
-          <td colSpan={6} className="form-error">
+          <td colSpan={7} className="form-error">
             {error}
           </td>
         </tr>
+      )}
+      {notesOpen && (
+        <NotesModal
+          initialNotes={assignment.notes ?? ''}
+          saving={saving}
+          onSave={handleSaveNotes}
+          onClose={() => setNotesOpen(false)}
+        />
       )}
     </>
   )

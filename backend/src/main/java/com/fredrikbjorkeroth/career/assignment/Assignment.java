@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,11 +37,14 @@ public class Assignment {
 	@Column(nullable = false)
 	private AssignmentStatus status = AssignmentStatus.CONSIDERING;
 
+	@Lob
+	private String notes;
+
 	protected Assignment() {
 	}
 
 	public Assignment(String link, List<String> technologies, Integer skillMatch, Integer interest) {
-		this(link, technologies, skillMatch, interest, AssignmentStatus.CONSIDERING);
+		this(link, technologies, skillMatch, interest, AssignmentStatus.CONSIDERING, null);
 	}
 
 	public Assignment(
@@ -48,12 +52,14 @@ public class Assignment {
 			List<String> technologies,
 			Integer skillMatch,
 			Integer interest,
-			AssignmentStatus status) {
+			AssignmentStatus status,
+			String notes) {
 		this.link = link;
 		this.technologies = technologies != null ? new ArrayList<>(technologies) : new ArrayList<>();
 		this.skillMatch = skillMatch;
 		this.interest = interest;
 		this.status = status != null ? status : AssignmentStatus.CONSIDERING;
+		this.notes = notes;
 	}
 
 	public Long getId() {
@@ -98,6 +104,14 @@ public class Assignment {
 
 	public void setStatus(AssignmentStatus status) {
 		this.status = status;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 
 }
