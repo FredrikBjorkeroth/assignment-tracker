@@ -191,8 +191,10 @@ function AssignmentRow({ assignment, onUpdated, onDeleted }: AssignmentRowProps)
             className="delete-button"
             disabled={busy}
             onClick={handleDelete}
+            aria-label="Delete assignment"
+            title="Delete assignment"
           >
-            {deleting ? 'Deleting...' : 'Delete'}
+            <TrashIcon />
           </button>
         </td>
       </tr>
@@ -204,6 +206,28 @@ function AssignmentRow({ assignment, onUpdated, onDeleted }: AssignmentRowProps)
         </tr>
       )}
     </>
+  )
+}
+
+function TrashIcon() {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      width="16"
+      height="16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M4 6h12" />
+      <path d="M8 6V4.5A1.5 1.5 0 0 1 9.5 3h1A1.5 1.5 0 0 1 12 4.5V6" />
+      <path d="M5.5 6l.5 9.5A1.5 1.5 0 0 0 7.5 17h5a1.5 1.5 0 0 0 1.5-1.5L14.5 6" />
+      <path d="M8.5 9v5" />
+      <path d="M11.5 9v5" />
+    </svg>
   )
 }
 
