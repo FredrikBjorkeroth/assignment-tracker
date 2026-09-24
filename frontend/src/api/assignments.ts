@@ -1,9 +1,21 @@
+export const ASSIGNMENT_STATUSES = [
+  'CONSIDERING',
+  'APPLIED',
+  'DROPPED',
+  'ACCEPTED',
+  'REJECTED',
+  'DECLINED',
+] as const
+
+export type AssignmentStatus = (typeof ASSIGNMENT_STATUSES)[number]
+
 export interface Assignment {
   id: number
   link: string
   technologies: string[]
   skillMatch: number | null
   interest: number | null
+  status: AssignmentStatus
 }
 
 export interface AssignmentInput {
@@ -11,6 +23,7 @@ export interface AssignmentInput {
   technologies?: string[]
   skillMatch?: number | null
   interest?: number | null
+  status?: AssignmentStatus
 }
 
 export type CreateAssignmentInput = AssignmentInput

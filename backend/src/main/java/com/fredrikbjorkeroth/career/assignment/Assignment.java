@@ -4,6 +4,8 @@ import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,14 +32,28 @@ public class Assignment {
 
 	private Integer interest;
 
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private AssignmentStatus status = AssignmentStatus.CONSIDERING;
+
 	protected Assignment() {
 	}
 
 	public Assignment(String link, List<String> technologies, Integer skillMatch, Integer interest) {
+		this(link, technologies, skillMatch, interest, AssignmentStatus.CONSIDERING);
+	}
+
+	public Assignment(
+			String link,
+			List<String> technologies,
+			Integer skillMatch,
+			Integer interest,
+			AssignmentStatus status) {
 		this.link = link;
 		this.technologies = technologies != null ? new ArrayList<>(technologies) : new ArrayList<>();
 		this.skillMatch = skillMatch;
 		this.interest = interest;
+		this.status = status != null ? status : AssignmentStatus.CONSIDERING;
 	}
 
 	public Long getId() {
@@ -74,6 +90,14 @@ public class Assignment {
 
 	public void setInterest(Integer interest) {
 		this.interest = interest;
+	}
+
+	public AssignmentStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(AssignmentStatus status) {
+		this.status = status;
 	}
 
 }

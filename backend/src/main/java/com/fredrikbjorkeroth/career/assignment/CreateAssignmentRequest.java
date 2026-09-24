@@ -9,5 +9,6 @@ public record CreateAssignmentRequest(
 		@NotBlank String link,
 		List<String> technologies,
 		@Min(1) @Max(5) Integer skillMatch,
-		@Min(1) @Max(5) Integer interest) {
+		@Min(1) @Max(5) Integer interest,
+		AssignmentStatus status) {
 }

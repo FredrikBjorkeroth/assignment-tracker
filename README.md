@@ -46,6 +46,8 @@ curl -X POST http://localhost:8080/api/assignments \
 ```
 
 `technologies` is a list of strings; `skillMatch` and `interest` are optional integers from 1-5.
+`status` is optional and defaults to `CONSIDERING`; other values are `APPLIED`, `DROPPED`,
+`ACCEPTED`, `REJECTED`, and `DECLINED`.
 
 List all saved assignments:
 

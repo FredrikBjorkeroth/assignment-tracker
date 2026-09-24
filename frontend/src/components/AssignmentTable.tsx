@@ -1,9 +1,22 @@
 import { useState } from 'react'
-import type { Assignment } from '../api/assignments'
-import { deleteAssignment, updateAssignment } from '../api/assignments'
+import type { Assignment, AssignmentStatus } from '../api/assignments'
+import {
+  ASSIGNMENT_STATUSES,
+  deleteAssignment,
+  updateAssignment,
+} from '../api/assignments'
 
 const PAGE_SIZE = 20
 const RATINGS = [1, 2, 3, 4, 5]
+
+const STATUS_LABELS: Record<AssignmentStatus, string> = {
+  CONSIDERING: 'Considering',
+  APPLIED: 'Applied',
+  DROPPED: 'Dropped',
+  ACCEPTED: 'Accepted',
+  REJECTED: 'Rejected',
+  DECLINED: 'Declined',
+}
 
 interface AssignmentTableProps {
   assignments: Assignment[]
@@ -34,13 +47,14 @@ export function AssignmentTable({
             <th>Technologies</th>
             <th>Skill Match</th>
             <th>Interest</th>
+            <th>Status</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           {pageItems.length === 0 && (
             <tr>
-              <td colSpan={5}>No assignments yet.</td>
+              <td colSpan={6}>No assignments yet.</td>
             </tr>
           )}
           {pageItems.map((assignment) => (
@@ -96,6 +110,7 @@ function AssignmentRow({ assignment, onUpdated, onDeleted }: AssignmentRowProps)
     technologies?: string[]
     skillMatch?: number | null
     interest?: number | null
+    status?: AssignmentStatus
   }) {
     setSaving(true)
     setError(null)
@@ -111,6 +126,7 @@ function AssignmentRow({ assignment, onUpdated, onDeleted }: AssignmentRowProps)
           changes.interest !== undefined
             ? changes.interest
             : assignment.interest,
+        status: changes.status ?? assignment.status,
       })
       onUpdated(updated)
     } catch (err) {
@@ -186,6 +202,20 @@ function AssignmentRow({ assignment, onUpdated, onDeleted }: AssignmentRowProps)
           />
         </td>
         <td>
+          <select
+            className="cell-select"
+            value={assignment.status}
+            disabled={busy}
+            onChange={(e) => save({ status: e.target.value as AssignmentStatus })}
+          >
+            {ASSIGNMENT_STATUSES.map((status) => (
+              <option key={status} value={status}>
+                {STATUS_LABELS[status]}
+              </option>
+            ))}
+          </select>
+        </td>
+        <td>
           <button
             type="button"
             className="delete-button"
@@ -200,7 +230,7 @@ function AssignmentRow({ assignment, onUpdated, onDeleted }: AssignmentRowProps)
       </tr>
       {error && (
         <tr>
-          <td colSpan={5} className="form-error">
+          <td colSpan={6} className="form-error">
             {error}
           </td>
         </tr>

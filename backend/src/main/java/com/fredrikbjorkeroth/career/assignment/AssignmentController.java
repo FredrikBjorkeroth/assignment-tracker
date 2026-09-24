@@ -28,7 +28,11 @@ public class AssignmentController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public AssignmentResponse create(@Valid @RequestBody CreateAssignmentRequest request) {
 		Assignment assignment = new Assignment(
-				request.link(), request.technologies(), request.skillMatch(), request.interest());
+				request.link(),
+				request.technologies(),
+				request.skillMatch(),
+				request.interest(),
+				request.status());
 		return AssignmentResponse.from(assignmentRepository.save(assignment));
 	}
 
@@ -46,6 +50,7 @@ public class AssignmentController {
 		assignment.setTechnologies(request.technologies());
 		assignment.setSkillMatch(request.skillMatch());
 		assignment.setInterest(request.interest());
+		assignment.setStatus(request.status() != null ? request.status() : assignment.getStatus());
 		return AssignmentResponse.from(assignmentRepository.save(assignment));
 	}
 
