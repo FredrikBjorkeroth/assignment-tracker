@@ -1,16 +1,13 @@
 # Assignment Tracker
 
-Tracks career development within the user's consulting job: past and potential future
-assignments, with links, metadata, and personal skill-match / interest scores. See
-`doc/adr/0001-service-architecture-and-tech-stack.md` for the architecture and tech stack.
-
-- `backend/` — Spring Boot (Java 21) REST API, persisting to a local SQLite database.
-- `frontend/` — React (TypeScript, Vite) single-page app.
+An assignment/job tracker: past and potential future assignments, with links, metadata, and personal skill-match /
+interest scores. See [ADR 1](doc/adr/0001-service-architecture-and-tech-stack.md) for the architecture and tech stack.
+Built in Java and React.
 
 ## Environment setup
 
-Java and Node versions are managed with [mise](https://mise.jdx.dev), pinned per-project in
-`mise.toml` (not installed globally).
+Java and Node versions are managed with [mise](https://mise.jdx.dev), pinned per-project in `mise.toml` (not installed
+globally).
 
 1. Install mise: `brew install mise`, then add its shell activation to your `~/.zshrc`
    (`eval "$(mise activate zsh)"`) if not already present.
