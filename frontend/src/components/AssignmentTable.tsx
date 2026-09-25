@@ -50,13 +50,14 @@ export function AssignmentTable({
             <th>Interest</th>
             <th>Status</th>
             <th>Notes</th>
+            <th>Added</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           {pageItems.length === 0 && (
             <tr>
-              <td colSpan={7}>No assignments yet.</td>
+              <td colSpan={8}>No assignments yet.</td>
             </tr>
           )}
           {pageItems.map((assignment) => (
@@ -237,6 +238,7 @@ function AssignmentRow({ assignment, onUpdated, onDeleted }: AssignmentRowProps)
             {assignment.notes ? 'Edit notes' : 'Add notes'}
           </button>
         </td>
+        <td>{assignment.createdAt}</td>
         <td>
           <button
             type="button"
@@ -252,7 +254,7 @@ function AssignmentRow({ assignment, onUpdated, onDeleted }: AssignmentRowProps)
       </tr>
       {error && (
         <tr>
-          <td colSpan={7} className="form-error">
+          <td colSpan={8} className="form-error">
             {error}
           </td>
         </tr>

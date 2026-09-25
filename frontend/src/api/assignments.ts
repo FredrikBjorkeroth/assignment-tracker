@@ -17,6 +17,7 @@ export interface Assignment {
   interest: number | null
   status: AssignmentStatus
   notes: string | null
+  createdAt: string
 }
 
 export interface AssignmentInput {

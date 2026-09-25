@@ -1,5 +1,6 @@
 package com.fredrikbjorkeroth.career.assignment;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public record AssignmentResponse(
@@ -9,7 +10,8 @@ public record AssignmentResponse(
 		Integer skillMatch,
 		Integer interest,
 		AssignmentStatus status,
-		String notes) {
+		String notes,
+		LocalDate createdAt) {
 
 	static AssignmentResponse from(Assignment assignment) {
 		return new AssignmentResponse(
@@ -19,6 +21,7 @@ public record AssignmentResponse(
 				assignment.getSkillMatch(),
 				assignment.getInterest(),
 				assignment.getStatus(),
-				assignment.getNotes());
+				assignment.getNotes(),
+				assignment.getCreatedAt());
 	}
 }

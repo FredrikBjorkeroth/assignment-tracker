@@ -11,6 +11,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.PrePersist;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +41,12 @@ public class Assignment {
 
 	@Lob
 	private String notes;
+
+	// Not NOT-NULL at the DB level: SQLite can't ADD COLUMN ... NOT NULL without a constant
+	// default, and Hibernate's SQLite dialect stores LocalDate as an epoch value, so a literal
+	// default isn't viable either. Existing rows are backfilled once at startup (see
+	// AssignmentCreatedAtBackfill); every row written through the app gets a value via onCreate().
+	private LocalDate createdAt;
 
 	protected Assignment() {
 	}
@@ -112,6 +120,21 @@ public class Assignment {
 
 	public void setNotes(String notes) {
 		this.notes = notes;
+	}
+
+	public LocalDate getCreatedAt() {
+		return createdAt;
+	}
+
+	void setCreatedAt(LocalDate createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	@PrePersist
+	protected void onCreate() {
+		if (createdAt == null) {
+			createdAt = LocalDate.now();
+		}
 	}
 
 }
