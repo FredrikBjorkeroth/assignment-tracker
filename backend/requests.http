@@ -3,7 +3,7 @@ POST http://localhost:8080/api/assignments
 Content-Type: application/json
 
 {
-  "link": "https://portal.emagine.org/jobs/180220/senior-data-machine-learning-engineer",
+  "link": "https://example.com/job-description",
   "technologies": ["Java"],
   "skillMatch": 4,
   "interest": null
