@@ -1,8 +1,7 @@
 # Career Development
 
-Tracks career development within the user's consulting job: past and potential future
-assignments, with links, metadata, and personal skill-match / interest scores. See
-`doc/adr/` for architecture decisions and `doc/notes/` for lightweight implementation reference.
+Tracks prospective consulting opportunities: past and potential future
+assignments, with links, metadata, and personal skill-match / interest scores.
 
 ## Folders
 
@@ -14,7 +13,7 @@ assignments, with links, metadata, and personal skill-match / interest scores. S
 - `e2e/` — Self-contained Playwright package that drives the real frontend and backend together.
   Independent `package.json`, not a dependency of either `backend/` or `frontend/`.
 - `doc/adr/` — Architecture decision records.
-- `doc/notes/` — Lightweight reference notes (not ADRs) for quick lookup, e.g. what SQL a given
+- `doc/notes/` — Lightweight reference notes for quick lookup, e.g. what SQL a given
   action issues.
 
 ## Tech stack
@@ -26,5 +25,22 @@ assignments, with links, metadata, and personal skill-match / interest scores. S
 - **E2E:** Playwright, run against both services started for the duration of the test run.
 - **Toolchain:** Java and Node versions are pinned per-project via `mise` (`mise.toml`), not
   installed globally.
+- **Deployment:** Can be deployed locally with `docker compose`.
 
-Run instructions are in `README.md`.
+## ADRs and plans
+
+When creating ADRs, add the conventional sections for Context, Decision, and Consequences. 
+Do not put step-by-step implementation plans in the ADR, they are meant to capture the
+why rather than the how.
+
+Keep ADRs brief. Focus on the core intent behind the decision. You do not need to mention 
+options that weren't taken during the ideation process, unless the decision is explicitly 
+to reverse or change an existing decision.
+
+When creating an implementation plan, if saving it for future use, put it in the folder 
+.claude/plans. Once the plan has been implemented, delete the plan file.
+
+## Notes
+
+- Run instructions are in `README.md`.
+- Unless explicitly told to, never git commit code or push, I will do that myself.
