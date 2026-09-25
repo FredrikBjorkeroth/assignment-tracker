@@ -1,13 +1,13 @@
-package com.fredrikbjorkeroth.career;
+package com.fredrikbjorkeroth.tracker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CareerDevelopmentApplication {
+public class AssignmentTrackerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CareerDevelopmentApplication.class, args);
+		SpringApplication.run(AssignmentTrackerApplication.class, args);
 	}
 
 }

@@ -17,6 +17,10 @@ e2e/playwright-report/
 .vscode/
 .mcp.json
 
+# Local-only notes and skills, not for the public repo
+doc/notes/
+.claude/skills/
+
 # Local database
 *.db
 *.sqlite

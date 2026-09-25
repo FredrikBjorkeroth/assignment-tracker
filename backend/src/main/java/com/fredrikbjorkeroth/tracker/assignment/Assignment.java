@@ -1,4 +1,4 @@
-package com.fredrikbjorkeroth.career.assignment;
+package com.fredrikbjorkeroth.tracker.assignment;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;

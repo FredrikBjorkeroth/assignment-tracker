@@ -1,4 +1,4 @@
-# Career Development
+# Assignment Tracker
 
 Tracks career development within the user's consulting job: past and potential future
 assignments, with links, metadata, and personal skill-match / interest scores. See
@@ -24,9 +24,9 @@ cd backend
 ./gradlew bootRun
 ```
 
-Starts the API on `http://localhost:8080`, backed by `backend/data/career.db` (created on
+Starts the API on `http://localhost:8080`, backed by `backend/data/assignments.db` (created on
 first run). This file persists across restarts — stopping and restarting `bootRun` will not
-lose your data. It's separate from the database used by tests (`backend/build/career-test.db`,
+lose your data. It's separate from the database used by tests (`backend/build/assignments-test.db`,
 created by `./gradlew integrationTest`), which is dropped after each test run and cleared
 entirely by `./gradlew clean`.
 
@@ -69,7 +69,7 @@ Starts the dev server on `http://localhost:5173`.
 
 As an alternative to the manual steps above, `docker-compose up --build` starts both services in
 containers (backend on `http://localhost:8080`, frontend on `http://localhost:5173`), with
-`backend/data/career.db` bind-mounted so data persists across restarts. Stop with
+`backend/data/assignments.db` bind-mounted so data persists across restarts. Stop with
 `docker-compose down` (not `docker kill`) so the backend shuts down gracefully.
 
 The frontend container runs the Vite dev server, not a production build — see
@@ -89,7 +89,7 @@ npm run test:e2e
 ```
 
 This starts its own backend (`e2e` Spring profile, backed by the throwaway
-`backend/build/career-e2e.db` — see
+`backend/build/assignments-e2e.db` — see
 `doc/adr/0002-e2e-testing-strategy.md`) and its own frontend dev server, runs the tests, then
-stops both. It never touches `backend/data/career.db`. Since it reuses port `8080`, stop any
+stops both. It never touches `backend/data/assignments.db`. Since it reuses port `8080`, stop any
 backend you started manually via `./gradlew bootRun` before running this.

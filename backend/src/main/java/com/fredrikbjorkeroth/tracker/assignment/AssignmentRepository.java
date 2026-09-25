@@ -1,4 +1,4 @@
-package com.fredrikbjorkeroth.career.assignment;
+package com.fredrikbjorkeroth.tracker.assignment;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

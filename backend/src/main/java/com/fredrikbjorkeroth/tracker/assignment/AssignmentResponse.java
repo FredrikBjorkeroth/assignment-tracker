@@ -1,4 +1,4 @@
-package com.fredrikbjorkeroth.career.assignment;
+package com.fredrikbjorkeroth.tracker.assignment;
 
 import java.time.LocalDate;
 import java.util.List;

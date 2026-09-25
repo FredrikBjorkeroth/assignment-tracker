@@ -1,4 +1,4 @@
-package com.fredrikbjorkeroth.career.assignment;
+package com.fredrikbjorkeroth.tracker.assignment;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.nullValue;

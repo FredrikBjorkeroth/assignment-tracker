@@ -1,4 +1,4 @@
-# Career Development
+# Assignment Tracker
 
 Tracks prospective consulting opportunities: past and potential future
 assignments, with links, metadata, and personal skill-match / interest scores.

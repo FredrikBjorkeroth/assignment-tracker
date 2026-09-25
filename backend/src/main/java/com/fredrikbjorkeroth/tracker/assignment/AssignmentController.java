@@ -1,4 +1,4 @@
-package com.fredrikbjorkeroth.career.assignment;
+package com.fredrikbjorkeroth.tracker.assignment;
 
 import jakarta.validation.Valid;
 import java.util.List;

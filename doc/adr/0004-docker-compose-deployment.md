@@ -25,7 +25,7 @@ multiple processes sharing one PID 1.
   8080.
 - `frontend/Dockerfile`: Node base image, runs the **Vite dev server** (`npm run dev`), exposing
   port 5173. This is a deliberate stopgap, not a production build — see Consequences.
-- The SQLite file (`backend/data/career.db`) is persisted via a bind mount, so container restarts
+- The SQLite file (`backend/data/assignments.db`) is persisted via a bind mount, so container restarts
   and rebuilds don't lose data, mirroring the existing local file layout.
 - Shutdown is via `docker-compose down` (SIGTERM, not `docker kill`), so Spring Boot closes its
   connection pool and the SQLite file cleanly before exit.

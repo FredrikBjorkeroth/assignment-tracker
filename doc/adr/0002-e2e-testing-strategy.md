@@ -12,11 +12,11 @@ The frontend's assignment table and add-by-link flow need an end-to-end test tha
 real frontend and backend together, the same way a person would use the app. Testing this
 manually against the real backend showed the problem: the API has no `DELETE`/reset endpoint,
 so any test data written during a manual or automated run permanently pollutes
-`backend/data/career.db` unless removed by hand, directly in the database. That's not
+`backend/data/assignments.db` unless removed by hand, directly in the database. That's not
 acceptable for data this app is meant to track durably.
 
 The backend already has a precedent for isolating test data: `backend/src/integration` uses
-`spring.jpa.hibernate.ddl-auto=create-drop` against a throwaway `build/career-test.db`. That
+`spring.jpa.hibernate.ddl-auto=create-drop` against a throwaway `build/assignments-test.db`. That
 works there because MockMvc-based integration tests run in-process against the Spring context
 built for that source set. An E2E test is different — it needs the backend running as a real,
 separately-launched process on a real port, which a source-set resource override can't
@@ -26,7 +26,7 @@ code, not a `bootRun` process launched from `src/main`).
 ## Decision
 
 - Add a Spring profile, `e2e`, via `backend/src/main/resources/application-e2e.properties`,
-  pointing at its own throwaway `build/career-e2e.db` with `ddl-auto=create-drop` (recreated
+  pointing at its own throwaway `build/assignments-e2e.db` with `ddl-auto=create-drop` (recreated
   fresh on every server startup). Launch it with
   `./gradlew bootRun --args='--spring.profiles.active=e2e'`. This is new to the repo — no
   profiles exist elsewhere — but is standard Spring Boot practice and keeps the same
