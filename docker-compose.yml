@@ -5,6 +5,16 @@ services:
       - "8080:8080"
     volumes:
       - ./backend/data:/app/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "bash -c 'exec 3<>/dev/tcp/localhost/8080 && printf \"GET /actuator/health HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n\" >&3 && grep -q \"\\\"status\\\":\\\"UP\\\"\" <&3'",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 30s
 
   frontend:
     build: ./frontend
@@ -13,4 +23,5 @@ services:
     environment:
       API_PROXY_TARGET: http://backend:8080
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy

@@ -29,18 +29,25 @@ assignments, with links, metadata, and personal skill-match / interest scores.
 
 ## ADRs and plans
 
-When creating ADRs, add the conventional sections for Context, Decision, and Consequences. 
+When creating ADRs, add the conventional sections for Context, Decision, and Consequences.
 Do not put step-by-step implementation plans in the ADR, they are meant to capture the
 why rather than the how.
 
-Keep ADRs brief. Focus on the core intent behind the decision. You do not need to mention 
-options that weren't taken during the ideation process, unless the decision is explicitly 
+Keep ADRs brief. Focus on the core intent behind the decision. You do not need to mention
+options that weren't taken during the ideation process, unless the decision is explicitly
 to reverse or change an existing decision.
 
-When creating an implementation plan, if saving it for future use, put it in the folder 
+When creating an implementation plan, if saving it for future use, put it in the folder
 .claude/plans. Once the plan has been implemented, delete the plan file.
 
 ## Notes
 
 - Run instructions are in `README.md`.
 - Unless explicitly told to, never git commit code or push, I will do that myself.
+
+## Security and privacy
+
+As a publicly available repo, this must not contain any personally identifiable information.
+
+When adding new endpoints, integrations, or databases, perform a security audit to ensure 
+endpoints are well-protected from common security risks, including injection attacks. 
