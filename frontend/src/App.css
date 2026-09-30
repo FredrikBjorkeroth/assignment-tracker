@@ -82,6 +82,36 @@
   overflow-x: auto;
 }
 
+.status-filter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 0 0 12px;
+  padding: 0;
+  border: none;
+  font-size: 14px;
+}
+
+.status-filter legend {
+  float: left;
+  padding: 0;
+  margin-right: 4px;
+  color: var(--text-h);
+}
+
+.status-filter label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.status-filter-hidden-count {
+  color: var(--text);
+  opacity: 0.8;
+}
+
 .assignment-table table {
   width: 100%;
   border-collapse: collapse;

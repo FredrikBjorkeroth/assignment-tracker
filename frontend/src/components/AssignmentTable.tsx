@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { Assignment, AssignmentStatus } from '../api/assignments'
 import {
   ASSIGNMENT_STATUSES,
@@ -19,6 +19,25 @@ const STATUS_LABELS: Record<AssignmentStatus, string> = {
   DECLINED: 'Declined',
 }
 
+const HIDDEN_STATUSES_STORAGE_KEY = 'assignmentTable.hiddenStatuses'
+const DEFAULT_HIDDEN_STATUSES: AssignmentStatus[] = [
+  'DROPPED',
+  'REJECTED',
+  'DECLINED',
+]
+
+function loadHiddenStatuses(): AssignmentStatus[] {
+  try {
+    const raw = localStorage.getItem(HIDDEN_STATUSES_STORAGE_KEY)
+    if (raw === null) return DEFAULT_HIDDEN_STATUSES
+    const parsed: unknown = JSON.parse(raw)
+    if (!Array.isArray(parsed)) return DEFAULT_HIDDEN_STATUSES
+    return ASSIGNMENT_STATUSES.filter((s) => parsed.includes(s))
+  } catch {
+    return DEFAULT_HIDDEN_STATUSES
+  }
+}
+
 interface AssignmentTableProps {
   assignments: Assignment[]
   onUpdated: (assignment: Assignment) => void
@@ -31,16 +50,61 @@ export function AssignmentTable({
   onDeleted,
 }: AssignmentTableProps) {
   const [page, setPage] = useState(0)
+  const [hiddenStatuses, setHiddenStatuses] =
+    useState<AssignmentStatus[]>(loadHiddenStatuses)
 
-  const pageCount = Math.max(1, Math.ceil(assignments.length / PAGE_SIZE))
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        HIDDEN_STATUSES_STORAGE_KEY,
+        JSON.stringify(hiddenStatuses),
+      )
+    } catch {
+      // Storage unavailable (e.g. private mode); the filter just won't persist.
+    }
+  }, [hiddenStatuses])
+
+  function toggleStatus(status: AssignmentStatus) {
+    setHiddenStatuses((prev) =>
+      prev.includes(status)
+        ? prev.filter((s) => s !== status)
+        : [...prev, status],
+    )
+    setPage(0)
+  }
+
+  const visibleAssignments = assignments.filter(
+    (a) => !hiddenStatuses.includes(a.status),
+  )
+  const hiddenCount = assignments.length - visibleAssignments.length
+
+  const pageCount = Math.max(1, Math.ceil(visibleAssignments.length / PAGE_SIZE))
   const clampedPage = Math.min(page, pageCount - 1)
-  const pageItems = assignments.slice(
+  const pageItems = visibleAssignments.slice(
     clampedPage * PAGE_SIZE,
     (clampedPage + 1) * PAGE_SIZE,
   )
 
   return (
     <div className="assignment-table">
+      <fieldset className="status-filter">
+        <legend>Show statuses</legend>
+        {ASSIGNMENT_STATUSES.map((status) => (
+          <label key={status}>
+            <input
+              type="checkbox"
+              checked={!hiddenStatuses.includes(status)}
+              onChange={() => toggleStatus(status)}
+            />
+            {STATUS_LABELS[status]}
+          </label>
+        ))}
+        {hiddenCount > 0 && (
+          <span className="status-filter-hidden-count">
+            {hiddenCount} hidden
+          </span>
+        )}
+      </fieldset>
       <table>
         <thead>
           <tr>
@@ -57,7 +121,11 @@ export function AssignmentTable({
         <tbody>
           {pageItems.length === 0 && (
             <tr>
-              <td colSpan={8}>No assignments yet.</td>
+              <td colSpan={8}>
+                {assignments.length === 0
+                  ? 'No assignments yet.'
+                  : 'No assignments match the current filter.'}
+              </td>
             </tr>
           )}
           {pageItems.map((assignment) => (
