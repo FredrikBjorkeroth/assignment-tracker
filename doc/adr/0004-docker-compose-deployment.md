@@ -8,11 +8,9 @@ Accepted
 
 ## Context
 
-`start.sh` runs the backend and frontend as two background processes in one script, polling until
-each is ready and trapping signals to kill both on exit. It works but has no restart-on-crash, and
-an awkward interruption (e.g. a killed terminal) can leave orphaned processes holding ports 8080 or
-5173. A more robust way to run the full stack locally is needed, without giving up the fast,
-no-build-step loop `start.sh` already provides.
+Running the backend and frontend as separate local processes has no restart-on-crash, and an
+awkward interruption (e.g. a killed terminal) can leave orphaned processes holding ports 8080 or
+5173. A more robust way to run the full stack locally is needed.
 
 ## Decision
 
@@ -29,13 +27,9 @@ multiple processes sharing one PID 1.
   and rebuilds don't lose data, mirroring the existing local file layout.
 - Shutdown is via `docker-compose down` (SIGTERM, not `docker kill`), so Spring Boot closes its
   connection pool and the SQLite file cleanly before exit.
-- `start.sh` is kept unchanged as a lighter-weight alternative for contributors who don't want a
-  Docker build step; the README documents both paths.
 
 ## Consequences
 
-- Two run paths (`start.sh` and `docker-compose`) now exist side by side and must be kept in sync
-  in the README as ports, env vars, or startup behavior change.
 - The frontend container runs the Vite dev server, not a production build served by e.g. nginx —
   this does not make the app deployable outside local use. Deploying it beyond local/personal
   use would first need further productionization work, such as a production frontend build,

@@ -69,8 +69,6 @@ containers (backend on `http://localhost:8080`, frontend on `http://localhost:51
 `backend/data/assignments.db` bind-mounted so data persists across restarts. Stop with
 `docker-compose down` (not `docker kill`) so the backend shuts down gracefully.
 
-`start.sh` remains available as a lighter-weight, no-Docker alternative.
-
 ## Running E2E tests
 
 `e2e/` is a self-contained package (own `package.json`, independent of both `backend/` and
