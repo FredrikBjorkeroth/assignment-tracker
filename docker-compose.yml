@@ -2,14 +2,14 @@ services:
   backend:
     build: ./backend
     ports:
-      - "8080:8080"
+      - "7310:7310"
     volumes:
       - ./backend/data:/app/data
     healthcheck:
       test:
         [
           "CMD-SHELL",
-          "bash -c 'exec 3<>/dev/tcp/localhost/8080 && printf \"GET /actuator/health HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n\" >&3 && grep -q \"\\\"status\\\":\\\"UP\\\"\" <&3'",
+          "bash -c 'exec 3<>/dev/tcp/localhost/7310 && printf \"GET /actuator/health HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n\" >&3 && grep -q \"\\\"status\\\":\\\"UP\\\"\" <&3'",
         ]
       interval: 5s
       timeout: 3s
@@ -19,9 +19,9 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "5173:5173"
+      - "7311:7311"
     environment:
-      API_PROXY_TARGET: http://backend:8080
+      API_PROXY_TARGET: http://backend:7310
     depends_on:
       backend:
         condition: service_healthy

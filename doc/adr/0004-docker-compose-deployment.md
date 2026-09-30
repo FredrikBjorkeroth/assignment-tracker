@@ -9,8 +9,8 @@ Accepted
 ## Context
 
 Running the backend and frontend as separate local processes has no restart-on-crash, and an
-awkward interruption (e.g. a killed terminal) can leave orphaned processes holding ports 8080 or
-5173. A more robust way to run the full stack locally is needed.
+awkward interruption (e.g. a killed terminal) can leave orphaned processes holding the ports. A 
+more robust way to run the full stack locally is needed.
 
 ## Decision
 
@@ -19,10 +19,8 @@ containers**, rather than both processes in one container — this keeps process
 restarts, and logs per-service, and avoids needing a custom init/signal-forwarding setup for
 multiple processes sharing one PID 1.
 
-- `backend/Dockerfile`: Java 21 base image, builds and runs the Spring Boot app, exposing port
-  8080.
-- `frontend/Dockerfile`: Node base image, runs the **Vite dev server** (`npm run dev`), exposing
-  port 5173. This is a deliberate stopgap, not a production build — see Consequences.
+- `backend/Dockerfile`: Java 21 base image, builds and runs the Spring Boot app.
+- `frontend/Dockerfile`: Node base image, runs the **Vite dev server** (`npm run dev`).
 - The SQLite file (`backend/data/assignments.db`) is persisted via a bind mount, so container restarts
   and rebuilds don't lose data, mirroring the existing local file layout.
 - Shutdown is via `docker-compose down` (SIGTERM, not `docker kill`), so Spring Boot closes its

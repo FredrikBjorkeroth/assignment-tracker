@@ -31,7 +31,7 @@ code, not a `bootRun` process launched from `src/main`).
   `./gradlew bootRun --args='--spring.profiles.active=e2e'`. This is new to the repo — no
   profiles exist elsewhere — but is standard Spring Boot practice and keeps the same
   isolation pattern as the existing integration tests, just applied to a real running process
-  instead of an in-process test context. The server still runs on the default port `8080`, so
+  instead of an in-process test context. The server still runs on the default port, so
   the frontend's existing Vite dev proxy needs no changes.
 - Use Playwright (`@playwright/test`) to drive the actual Vite dev server and this backend
   process together, from a new top-level `e2e/` package with its own `package.json` —
@@ -50,10 +50,10 @@ code, not a `bootRun` process launched from `src/main`).
 
 ## Consequences
 
-- A developer's own `./gradlew bootRun` dev backend on `:8080` must be stopped before running
-  `npm run test:e2e`, since the E2E run reuses the same port deliberately to avoid touching
-  frontend proxy configuration. Gradle fails loudly ("port already in use") if this isn't
-  done, rather than silently running against the wrong database.
+- A developer's own `./gradlew bootRun` dev backend on the default port must be stopped before 
+  running `npm run test:e2e`, since the E2E run reuses the same port deliberately to avoid 
+  touching frontend proxy configuration. Gradle fails loudly ("port already in use") if this 
+  isn't done, rather than silently running against the wrong database.
 - If a `DELETE`/reset endpoint is added later, E2E tests could be simplified to reset state
   between cases instead of relying on serial execution and incremental assertions — worth
   revisiting this ADR at that point.

@@ -1,5 +1,5 @@
 ### Add an assignment (simulates pasting a link and clicking "Add")
-POST http://localhost:8080/api/assignments
+POST http://localhost:7310/api/assignments
 Content-Type: application/json
 
 {
@@ -10,4 +10,4 @@ Content-Type: application/json
 }
 
 ### List all assignments
-GET http://localhost:8080/api/assignments
+GET http://localhost:7310/api/assignments

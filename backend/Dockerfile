@@ -8,6 +8,6 @@ COPY src ./src
 
 RUN ./gradlew bootJar --no-daemon
 
-EXPOSE 8080
+EXPOSE 7310
 
 CMD ["sh", "-c", "java -jar $(ls build/libs/*.jar | grep -v plain)"]
