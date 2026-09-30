@@ -13,8 +13,6 @@ assignments, with links, metadata, and personal skill-match / interest scores.
 - `e2e/` — Self-contained Playwright package that drives the real frontend and backend together.
   Independent `package.json`, not a dependency of either `backend/` or `frontend/`.
 - `doc/adr/` — Architecture decision records.
-- `doc/notes/` — Lightweight reference notes for quick lookup, e.g. what SQL a given
-  action issues.
 
 ## Tech stack
 

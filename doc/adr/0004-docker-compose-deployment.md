@@ -37,9 +37,8 @@ multiple processes sharing one PID 1.
 - Two run paths (`start.sh` and `docker-compose`) now exist side by side and must be kept in sync
   in the README as ports, env vars, or startup behavior change.
 - The frontend container runs the Vite dev server, not a production build served by e.g. nginx —
-  this does not make the app deployable outside local use. Concrete gaps (production frontend
-  build, env-based API URL config, hardening, etc.) are tracked in
-  `doc/notes/productionization-tasks.md` and should be revisited if this app is ever deployed
-  beyond local/personal use.
+  this does not make the app deployable outside local use. Deploying it beyond local/personal
+  use would first need further productionization work, such as a production frontend build,
+  environment-based API URL configuration, and general hardening.
 - Adds two Dockerfiles and a compose file to maintain, and Docker as an optional toolchain
   dependency for anyone using this path.

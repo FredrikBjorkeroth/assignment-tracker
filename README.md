@@ -69,9 +69,7 @@ containers (backend on `http://localhost:8080`, frontend on `http://localhost:51
 `backend/data/assignments.db` bind-mounted so data persists across restarts. Stop with
 `docker-compose down` (not `docker kill`) so the backend shuts down gracefully.
 
-The frontend container runs the Vite dev server, not a production build — see
-`doc/adr/0004-docker-compose-deployment.md` and `doc/notes/productionization-tasks.md` for why and
-what's deferred. `start.sh` remains available as a lighter-weight, no-Docker alternative.
+`start.sh` remains available as a lighter-weight, no-Docker alternative.
 
 ## Running E2E tests
 
